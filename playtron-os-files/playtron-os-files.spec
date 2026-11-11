@@ -24,6 +24,12 @@ Conflicts: playtron-os-scripts zram-generator-defaults
 cp -Rv playtron-os-files-%{version}/etc/ %{buildroot}/
 cp -Rv playtron-os-files-%{version}/usr/ %{buildroot}/
 
+# The tarball still ships the one.playtron polkit rules names.
+for rule in factory-reset hwctl playtronos-session-select playtronos-update rpmostree1; do
+    mv %{buildroot}/usr/share/polkit-1/rules.d/50-one.playtron.$rule.rules \
+       %{buildroot}/usr/share/polkit-1/rules.d/50-inc.kora.$rule.rules
+done
+
 mkdir -p %{buildroot}/usr/share/licenses/playtron-os-files/
 cp playtron-os-files-%{version}/LICENSE %{buildroot}/usr/share/licenses/playtron-os-files/
 
@@ -81,11 +87,11 @@ cp playtron-os-files-%{version}/LICENSE %{buildroot}/usr/share/licenses/playtron
 /usr/share/pipewire/pipewire.conf.d/pipewire-rnnoise.conf
 /usr/share/playtron/test_audio.mp3
 /usr/share/playtron/test_video.webm
-/usr/share/polkit-1/rules.d/50-one.playtron.factory-reset.rules
-/usr/share/polkit-1/rules.d/50-one.playtron.hwctl.rules
-/usr/share/polkit-1/rules.d/50-one.playtron.playtronos-session-select.rules
-/usr/share/polkit-1/rules.d/50-one.playtron.playtronos-update.rules
-/usr/share/polkit-1/rules.d/50-one.playtron.rpmostree1.rules
+/usr/share/polkit-1/rules.d/50-inc.kora.factory-reset.rules
+/usr/share/polkit-1/rules.d/50-inc.kora.hwctl.rules
+/usr/share/polkit-1/rules.d/50-inc.kora.playtronos-session-select.rules
+/usr/share/polkit-1/rules.d/50-inc.kora.playtronos-update.rules
+/usr/share/polkit-1/rules.d/50-inc.kora.rpmostree1.rules
 /usr/share/wayland-sessions/playtron-weston.desktop
 
 %post
